@@ -100,20 +100,16 @@ function virtualKeyboardChromeExtension_shiftButtonKeys() {
 }
 
 function virtualKeyboardChromeExtension_fireEvent(eventType, keyCodeArg = 0, charCodeArgs = 0) {
-	var keyboardEvent = document.createEvent("KeyboardEvent");
-	var initMethod = typeof keyboardEvent.initKeyboardEvent !== 'undefined' ? "initKeyboardEvent" : "initKeyEvent";
-	keyboardEvent[initMethod](
-		eventType,
-		true, // bubbles
-		true, // cancelable
-		window,
-		false, // ctrlKeyArg
-		false, // altKeyArg
-		false, // shiftKeyArg
-		false, // metaKeyArg
-		keyCodeArg,
-		charCodeArgs
-	);
+	var keyboardEvent = new KeyboardEvent(eventType, {
+		bubbles: true,
+		cancelable: true,
+		view: window,
+		ctrlKey: false,
+		altKey: false,
+		shiftKey: false,
+		metaKey: false,
+		code: keyCodeArg || charCodeArgs,
+	})
 	return keyboardEvent;
 }
 
