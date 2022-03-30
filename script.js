@@ -39,9 +39,10 @@ var refreshTime = 1000;
 var dialogs =[];
 
 function virtualKeyboardChromeExtension_dispatch_event(eventType = "input") {
-	var keyboardEvent = document.createEvent("Event");
-	keyboardEvent.initEvent(eventType, true, false);
-	virtualKeyboardChromeExtensionClickedElem.dispatchEvent(keyboardEvent);
+	var event = new Event(eventType, {
+		bubbles: true, cancelable: false
+	})
+	virtualKeyboardChromeExtensionClickedElem.dispatchEvent(event);
 }
 
 function virtualKeyboardChromeExtension_generate_onchange() {
@@ -51,9 +52,10 @@ function virtualKeyboardChromeExtension_generate_onchange() {
 			if ("fireEvent" in virtualKeyboardChromeExtensionClickedElem)
 				virtualKeyboardChromeExtensionClickedElem.fireEvent("onchange");
 			else {
-				var evt = document.createEvent("HTMLEvents");
-				evt.initEvent("change", false, true);
-				virtualKeyboardChromeExtensionClickedElem.dispatchEvent(evt);
+				var event = new Event("change", {
+					bubbles: false, cancelable: true
+				})
+				virtualKeyboardChromeExtensionClickedElem.dispatchEvent(event);
 			}
 		}
 	}
