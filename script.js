@@ -114,9 +114,11 @@ function virtualKeyboardChromeExtension_fireEvent(eventType, keyCodeArg = 0, cha
 }
 
 function virtualKeyboardChromeExtension_backspace(eventType) {
-	var keyboardEvent = document.createEvent("Events");
-	keyboardEvent.initEvent(eventType, true, true);
-	keyboardEvent.keyCode = keyboardEvent.which = 8; // Backspace
+	var keyboardEvent = new KeyboardEvent(eventType, {
+		bubbles: true,
+		cancelable: true,
+		code: 8
+	})
 	return keyboardEvent;
 }
 
